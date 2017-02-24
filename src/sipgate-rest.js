@@ -1,4 +1,5 @@
 function _request (uri, callback, bearer) {
+  console.log(uri)
   var https = require('https')
   var options = {
     hostname: 'api.sipgate.com',
@@ -17,6 +18,7 @@ function _request (uri, callback, bearer) {
       fullResult += d
     })
     res.on('end', () => {
+      console.log(fullResult)
       var resultdata = JSON.parse(fullResult)
       callback(resultdata)
     })
@@ -37,8 +39,8 @@ module.exports = (bearer) => {
       var params = []
       params.push('offset=' + offset)
       params.push('limit=' + limit)
-      types.forEach(() => {
-        params.push('types=' + limit)
+      types.forEach((type) => {
+        params.push('types=' + type)
       })
       _request('/v1/w0/history?' + params.join('&'), callback, bearer)
     }

@@ -14,10 +14,7 @@ const handlers = {
   },
   'LastVoicemailIntent': function () {
     const rest = sipgate(this.event.session.user.accessToken)
-    console.log("ooooodooooodooood")
     rest.history((res) => {
-      console.log("wrrrrrr----rrrr+++++++rr++r++")
-      console.log(res)
       const text = res.items[0].transcription
       this.emit(':tell', text)
     }, 0, 1, ['VOICEMAIL'])
