@@ -33,7 +33,7 @@ module.exports = (bearer) => {
     'balance': (callback) => {
       _request('/v1/balance', callback, bearer)
     },
-    'history': (callback, offset = 0, limit = 10, types = []) => {
+    'history': (callback, offset, limit, types) => {
       var params = []
       params.push('offset=' + offset)
       params.push('limit=' + limit)
