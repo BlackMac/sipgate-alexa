@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "./deploy.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
