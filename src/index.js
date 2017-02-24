@@ -15,6 +15,16 @@ const handlers = {
   'LastVoicemailIntent': function () {
     const rest = sipgate(this.event.session.user.accessToken)
     rest.history((res) => {
+      const url = res.items[0].recordingUrl
+      var token = 'LOLWHAT'
+      var playBehavior = 'REPLACE_ALL'
+      this.response.audioPlayerPlay(playBehavior, url, token, null, 0)
+      this.emit(':responseReady')
+    }, 0, 1, ['VOICEMAIL'])
+  },
+  'LastVoicemailTextIntent': function () {
+    const rest = sipgate(this.event.session.user.accessToken)
+    rest.history((res) => {
       const text = res.items[0].transcription
       this.emit(':tell', text)
     }, 0, 1, ['VOICEMAIL'])
