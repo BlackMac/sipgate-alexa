@@ -13,7 +13,7 @@ function request(uri, callback, bearer) {
     },
     timeout: 5000,
   };
-  let fullResult = '';
+  var fullResult = '';
   const req = https.get(options, (res) => {
     res.on('data', (d) => {
       fullResult += d;
