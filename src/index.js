@@ -1,34 +1,32 @@
-'use strict'
-
-const Alexa = require('alexa-sdk')
-const sipgate = require('./sipgate-rest.js')
+const Alexa = require('alexa-sdk');
+const sipgate = require('./sipgate-rest.js');
 
 const handlers = {
 
-  'BalanceIntent': function () {
-    const rest = sipgate(this.event.session.user.accessToken)
+  BalanceIntent() {
+    const rest = sipgate(this.event.session.user.accessToken);
     rest.balance((res) => {
-      const balance = (res.amount / 10000).toFixed(2)
-      this.emit(':tell', 'Dein Guthaben bei sipgate beträgt ' + balance + '€')
-    })
+      const balance = (res.amount / 10000).toFixed(2);
+      this.emit(':tell', `Dein Guthaben bei sipgate beträgt ${balance}€`);
+    });
   },
-  'LastVoicemailIntent': function () {
-    const rest = sipgate(this.event.session.user.accessToken)
+  LastVoicemailIntent() {
+    const rest = sipgate(this.event.session.user.accessToken);
     rest.history((res) => {
-      const url = res.items[0].recordingUrl
-      var token = 'LOLWHAT'
-      var playBehavior = 'REPLACE_ALL'
-      this.response.audioPlayerPlay(playBehavior, url, token, null, 0)
-      this.emit(':responseReady')
-    }, 0, 1, ['VOICEMAIL'])
+      const url = res.items[0].recordingUrl;
+      const token = 'LOLWHAT';
+      const playBehavior = 'REPLACE_ALL';
+      this.response.audioPlayerPlay(playBehavior, url, token, null, 0);
+      this.emit(':responseReady');
+    }, 0, 1, ['VOICEMAIL']);
   },
-  'LastVoicemailTextIntent': function () {
-    const rest = sipgate(this.event.session.user.accessToken)
+  LastVoicemailTextIntent() {
+    const rest = sipgate(this.event.session.user.accessToken);
     rest.history((res) => {
-      const text = res.items[0].transcription
-      this.emit(':tell', text)
-    }, 0, 1, ['VOICEMAIL'])
-  }
+      const text = res.items[0].transcription;
+      this.emit(':tell', text);
+    }, 0, 1, ['VOICEMAIL']);
+  },
   // Weiterleitungen
   // Handy finden
   // Voicemails abspielen
@@ -52,10 +50,10 @@ const handlers = {
   // Party Modus
   // Was gibt es zu essen?
 
-}
+};
 
-exports.handler = function (event, context, callback) {
-  var alexa = Alexa.handler(event, context)
-  alexa.registerHandlers(handlers)
-  alexa.execute()
-}
+exports.handler = (event, context) => {
+  const alexa = Alexa.handler(event, context);
+  alexa.registerHandlers(handlers);
+  alexa.execute();
+};
